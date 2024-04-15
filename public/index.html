@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orangewood Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="script.js"></script>
+    <div class="header">
+        <img src="images/logo.png" alt="Orangewood">
+        <button class ='profile-button' id="profile-btn"><img src="images/profileIcon.png" alt="profile"></button>
+    </div>
+
+    <div id="profile-menu" class="profile-menu">
+        <p><strong>Company Name:</strong> <span id="menu-company-name">Orangewood</span></p>
+        <p><strong>Client Name:</strong> <span id="menu-client-name">Client Name</span></p>
+        <p><strong>Current Phase:</strong> Initiation</p>
+        <p><strong>Order Category:</strong> <span id="menu-order-category">Category Name</span></p>
+    </div>
+
+    <form id="dynamic-form">
+        <h2>Company Intoduction:</h2><br>
+        <label for="client-name">Client Name:</label><br>
+        <input type="text" id="client-name" name="client-name"><br>
+
+        <label for="poc">Person of Contact:</label><br>
+        <input type="text" id="poc" name="poc"><br>
+
+        <label for="client-address">Client Address:</label><br>
+        <input type="text" id="client-address" name="client-address"><br>
+
+        <label for="quotation-number">Quotation Number:</label><br>
+        <input type="text" id="quotation-number" name="quotation-number"><br>
+
+        <label for="client-ref-id">Client Reference Id:</label><br>
+        <input type="text" id="client-ref-id" name="client-ref-id"><br>
+
+        <label for="project">Project (One line description of the use case):</label><br>
+        <input type="text" id="project" name="project"><br>
+
+        <label for="subject">Subject Example (E.g. Techno-commercial proposal for applicable use cases):</label><br>
+        <input type="text" id="subject" name="subject"><br>
+
+        <label for="discussion-date">Date of discussion:</label><br>
+        <input type="text" id="discussion-date" name="discussion-date"><br>
+
+        <label for="robot">Robot Type:</label><br>
+        <select id="robot" name="robot">
+            <option value="spray-painting">OWL1</option>
+            <option value="powder-coating">OWL2</option>
+            <option value="bin-picking">OWL3</option>
+            <option value="visual-inspection">OWL4</option>
+        </select><br>
+
+        <label for="order-category">Order Category:</label><br>
+        <select id="order-category" name="order-category">
+            <option value="spray-painting">Spray Painting</option>
+            <option value="bin-picking">Bin Picking</option>
+            <option value="visual-inspection">Visual Inspection</option>
+        </select><br>
+        <div id="additional-questions"></div>
+        <input type="submit" value="Submit">
+    </form>
+    
+    
+
+    <div class="footer">
+        <button class="help-button">Help</button>
+    </div>
+
+</body>
+</html>

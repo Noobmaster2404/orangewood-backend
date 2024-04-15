@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header img {
+    height: 40px;
+}
+
+.header button {
+    background-color: orange;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.header button:hover {
+    background-color: #ff7f00;
+}
+
+.footer {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+
+.footer button {
+    background-color: orange;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.footer button:hover {
+    background-color: #ff7f00;
+}
+
+.profile-menu {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    background-color: orange;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-10px);
+    opacity: 0;
+    border-radius: 5px; /* Rounded corners */
+}
+
+.profile-menu.show {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.profile-menu p {
+    margin: 0 0 10px 0; /* Space between lines */
+    line-height: 1.6; /* Line height */
+    font-size: 14px; /* Font size */
+}
+
+.profile-button{
+    border-radius: 40px;
+}
+.help-button{
+    border-radius: 40px;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-weight: bold;
+    display: block;
+}
+
+form input, form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form input[type="submit"] {
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #ff7f00;
+}
+
+
