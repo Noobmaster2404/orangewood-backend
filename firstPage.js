@@ -1,6 +1,6 @@
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
-const { borderMargin, drawBorder, addHeader, addFooter, setupPageTemplate } = require('./PageTemplate');
+const { borderMargin, drawBorder, addHeader, addFooter, setupPageTemplate } = require('./public/PageTemplate');
 
 function generateFirstPage(formData){
     const drawTable = (doc, tableData, startX, startY, colWidth, rowHeight, cellPadding) => {
@@ -33,7 +33,7 @@ function generateFirstPage(formData){
     
 
     // Pipe the PDF document to a writable stream
-    const stream = fs.createWriteStream('FirstPage.pdf');
+    const stream = fs.createWriteStream('public/FirstPage.pdf');
     doc.pipe(stream);
 
     // Define page dimensions

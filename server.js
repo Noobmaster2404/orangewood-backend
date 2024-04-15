@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const generateFirstPage = require('./public/firstPage.js');
+const generateFirstPage = require('./firstPage.js');
 const path = require('path');
 
 const app = express();
