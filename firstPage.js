@@ -83,6 +83,7 @@ function generateFirstPage(formData){
 
     doc.end();
     console.log('PDF generated successfully.');
+    return 'public/FirstPage.pdf';
 }
 module.exports = generateFirstPage;
 

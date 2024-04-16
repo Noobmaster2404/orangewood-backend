@@ -41,7 +41,17 @@ app.get('/', function(req, res) {
  
  app.post('/submit-form', (req, res) => {
      const formData = req.body;
-     generateFirstPage(formData);
+    //  req.setTimeout(500000);
+     const pdfPath = generateFirstPage(formData);
+     res.download(pdfPath, function(err){
+        if (err){
+            // Handle error, but keep in mind the response may be partially-sent
+            // so check res.headersSent
+            console.log(err);
+        } else {
+            // decrement a download credit, etc.
+        }
+    });
      res.send('Form submitted successfully');
  });
  
