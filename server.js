@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const generateFirstPage = require('./firstPage.js');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 
@@ -40,20 +41,18 @@ app.get('/', function(req, res) {
  });
  
  app.post('/submit-form', (req, res) => {
-     const formData = req.body;
-    //  req.setTimeout(500000);
-     const pdfPath = generateFirstPage(formData);
-     res.download(pdfPath, function(err){
-        if (err){
-            // Handle error, but keep in mind the response may be partially-sent
-            // so check res.headersSent
-            console.log(err);
-        } else {
-            // decrement a download credit, etc.
-        }
+    const formData = req.body;
+    generateFirstPage(formData).then(pdfPath => {
+        res.setHeader('Content-Type', 'application/pdf');
+        res.download(pdfPath, 'FirstPage.pdf', function(err){
+            if (err) {
+                console.log(err);
+            } else {
+                fs.unlinkSync(pdfPath); // delete the file after sending it to the client
+            }
+        });
     });
-     res.send('Form submitted successfully');
- });
+});
  
  const port = process.env.PORT || 3000;
  app.listen(port, () => {

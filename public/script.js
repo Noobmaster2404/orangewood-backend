@@ -49,25 +49,21 @@ document.addEventListener('readystatechange', (event) =>{
                 },
                 body: JSON.stringify(data),
             })
-            .then((response) => response.blob()) // convert the response to a blob
-            .then((blob) => {
-                // Create a new object URL for the blob
+            .then(response => response.blob())
+            .then(blob => {
                 const url = window.URL.createObjectURL(blob);
-                const downloadLink = document.createElement('a');
-                downloadLink.href = url;
-                downloadLink.setAttribute('download', 'FirstPage.pdf'); // or any other extension you need
-        
-                // Add the link to the DOM
-                document.body.appendChild(downloadLink);
-        
-                // Simulate click
-                downloadLink.click();
-        
-                // Remove the link from the DOM
-                document.body.removeChild(downloadLink);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'FirstPage.pdf' || 'download';
+                const clickHandler = () => {
+                    setTimeout(() => {
+                        URL.revokeObjectURL(url);
+                        a.removeEventListener('click', clickHandler);
+                    }, 150);
+                };
+                a.addEventListener('click', clickHandler, false);
+                a.click();
+                return a;
             });
         });
         
