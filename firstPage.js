@@ -1,93 +1,74 @@
+const { jsPDF } = require('jspdf');
+require('jspdf-autotable');
 const fs = require('fs');
-const PDFDocument = require('pdfkit');
-const { borderMargin, drawBorder, addHeader, addFooter, setupPageTemplate } = require('./public/PageTemplate');
+const path = require('path');
 
-function generateFirstPage(formData){
+function generateFirstPage(formData) {
     return new Promise((resolve, reject) => {
-        const drawTable = (doc, tableData, startX, startY, colWidth, rowHeight, cellPadding) => {
-            doc.font('Helvetica').fontSize(13);
-            for (let i = 0; i < tableData.length; i++) {
-                startY += rowHeight;
-                for (let j = 0; j < tableData[i].length; j++) {
-                    doc.rect(startX + j * colWidth, startY, colWidth, rowHeight).stroke();
-                    if (j === 0) { // Check if it's the first column (row names)
-                        doc.font('Helvetica-Bold');
-                    }
-                    doc.text(tableData[i][j], startX + j * colWidth + cellPadding, startY + cellPadding);
-                    if (j === 0) { // Reset font to regular after drawing the cell
-                        doc.font('Helvetica');
+        try {
+            const doc = new jsPDF();
+
+            // Get today's date
+            const today = new Date();
+            const dateStr = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+            const tableData = [
+                ['DATE', dateStr],
+                ['CLIENT REF. ID', formData['client-ref-id']],
+                ['QUOTATION NO.', formData['quotation-number']],
+                ['CLIENT NAME', formData['client-name']],
+                ['ADDRESS', formData['client-address']],
+                ['PROJECT', formData['project']],
+                ['SUBJECT', formData['subject']],
+                ['KIND ATTENTION', formData['poc']]
+            ];
+
+            doc.autoTable({
+                body: tableData,
+                styles: { fontSize: 13, cellPadding: 5, lineColor: [0, 0, 0], lineWidth: 0.2 },
+                columnStyles: {
+                    0: { cellWidth: 60 },
+                    1: { cellWidth: 'auto' }
+                },
+                didParseCell: function(data) {
+                    data.cell.styles.fillColor = false;
+                    data.cell.styles.textColor = [0, 0, 0];
+                    if (data.column.index === 0) {
+                        data.cell.styles.fontStyle = 'bold';
                     }
                 }
-            }
-        };
+            });
 
-        const margin = 50;
-        const doc = new PDFDocument({
-            size: 'A4',
-            margins: {
-            top: margin,
-            bottom: margin,
-            left: margin,
-            right: margin
-            }
-        });
-        
+            doc.setFontSize(11);
+            doc.text('Ref- As per our discussion dated 19 Oct 2023', 10, doc.autoTable.previous.finalY + 10);
+            doc.text('Thank you for considering Orangewood Labs as your automation partner. We look forward to the opportunity to contribute to your organization\'s success. We are pleased to submit our offer for the subjected project.', 10, doc.autoTable.previous.finalY + 20);
+            doc.text('This offer encapsulates the following:', 10, doc.autoTable.previous.finalY + 30);
+            doc.text('Company Introduction', 20, doc.autoTable.previous.finalY + 40);
+            doc.text('Robot Specifications & Features', 20, doc.autoTable.previous.finalY + 50);
+            doc.text('Concept Overview', 20, doc.autoTable.previous.finalY + 60);
+            doc.text('Bill of Material (Our scope of Supply & Works)', 20, doc.autoTable.previous.finalY + 70);
+            doc.text('Commercial Offer', 20, doc.autoTable.previous.finalY + 80);
+            doc.text('Commercial Terms & Conditions', 20, doc.autoTable.previous.finalY + 90);
+            doc.text('Hope our quote is in line with your requirement. In case of any clarifications kindly feel free to revert to us.', 10, doc.autoTable.previous.finalY + 100);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Yours Faithfully,', 10, doc.autoTable.previous.finalY + 110);
+            doc.text('For Orangewood Research & Advancement Pvt Limited', 10, doc.autoTable.previous.finalY + 120);
+            doc.text('Maneesh Garg', 10, doc.autoTable.previous.finalY + 130);
+            doc.setFont('helvetica', 'bold');
 
-        // Pipe the PDF document to a writable stream
-        const stream = fs.createWriteStream('public/FirstPage.pdf');
-        doc.pipe(stream);
-
-        // Define page dimensions
-        const pageWidth = doc.page.width;
-        const pageHeight = doc.page.height;
-
-        // first page
-        setupPageTemplate(doc, pageWidth, pageHeight, margin);
-
-        // Listen for the pageAdded event and set up the page template
-        doc.on('pageAdded', () => setupPageTemplate(doc, pageWidth, pageHeight, margin));
-        const today = new Date();
-        const dateStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
-        const tableData = [
-            ['DATE', dateStr],
-            ['CLIENT REF. ID', formData.clientRefId],
-            ['QUOTATION NO.', formData.quotationNumber],
-            ['CLIENT NAME', formData.clientName],
-            ['ADDRESS', formData.clientAddress],
-            ['PROJECT', formData.project],
-            ['SUBJECT', formData.subject],
-            ['KIND ATTENTION', formData.poc]
-        ];
-
-        // Table settings
-        const cellPadding = 10;
-        const colWidth = 250;
-        const rowHeight = 30;
-        const startX = margin;
-        let startY = margin * 1.5; // Adjust startY to leave space for the header
-
-        // Draw table rows and columns
-        drawTable(doc, tableData, startX, startY, colWidth, rowHeight, cellPadding);
-
-        // Add additional text below the table
-        doc.moveDown(2);
-        doc.fontSize(11);
-        doc.text(`Ref- As per our discussion dated ${formData.discussionDate}.`,startX);
-        doc.moveDown(2).text('Thank you for considering Orangewood Labs as your automation partner. We look forward to the opportunity to contribute to your organization\'s success. We are pleased to submit our offer for the subjected project.',startX);
-        doc.moveDown(2).text('This offer encapsulates the following:',startX);
-        doc.list(['Company Introduction', 'Robot Specifications & Features', 'Concept Overview', 'Bill of Material (Our scope of Supply & Works)', 'Commercial Offer', 'Commercial Terms & Conditions'], { bulletRadius: 2, indent: 20 });
-        doc.moveDown(2).text('Hope our quote is in line with your requirement. In case of any clarifications kindly feel free to revert to us.');
-        doc.moveDown(2).font('Helvetica-Bold').text('Yours Faithfully,', startX);
-        doc.text('For Orangewood Research & Advancement Pvt Limited');
-        doc.text('Maneesh Garg');
-        doc.font('Helvetica');
-
-        doc.end();
-        stream.on('finish', function () {
-            console.log('PDF generated successfully.');
-            resolve('public/FirstPage.pdf');
-        });
+            // Generate a path for the PDF
+            const pdfPath = path.join(__dirname, 'FirstPage.pdf');
+            
+            // Save the PDF and resolve the path
+            doc.save(pdfPath, { returnPromise: true }).then(() => {
+                resolve(pdfPath);
+                console.log('PDF Generated successfully');
+            }).catch((err) => {
+                reject(err);
+            });
+        } catch (err) {
+            reject(err);
+        }
     });
 }
-module.exports = generateFirstPage;
 
+module.exports = generateFirstPage;
