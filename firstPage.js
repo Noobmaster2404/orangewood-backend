@@ -7,8 +7,6 @@ function generateFirstPage(formData) {
     return new Promise((resolve, reject) => {
         try {
             const doc = new jsPDF();
-
-            // Get today's date
             const today = new Date();
             const dateStr = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
             const tableData = [
