@@ -5,18 +5,63 @@ body {
 
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 0px;
     background-color: #ffffff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .header img {
-    height: 40px;
+    height: 100px;
 }
 
-.header button {
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-weight: bold;
+    display: block;
+}
+
+form input, form select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form input[type="submit"] {
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #ff7f00;
+}
+
+/* .upload-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+} */
+
+#imagePreview {
+    display: none;
+    margin-top: 20px;
+    max-width: 100%;
+    max-height: 300px;
+}
+
+/* .header button {
     background-color: orange;
     color: black;
     border: none;
@@ -32,9 +77,9 @@ body {
 
 .header button:hover {
     background-color: #ff7f00;
-}
+} */
 
-.footer {
+/* .footer {
     position: fixed;
     right: 20px;
     bottom: 20px;
@@ -56,8 +101,8 @@ body {
 
 .footer button:hover {
     background-color: #ff7f00;
-}
-
+} */
+/* 
 .profile-menu {
     display: none;
     position: fixed;
@@ -72,7 +117,7 @@ body {
     transition: opacity 0.3s ease, transform 0.3s ease;
     transform: translateY(-10px);
     opacity: 0;
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 5px;
 }
 
 .profile-menu.show {
@@ -82,9 +127,9 @@ body {
 }
 
 .profile-menu p {
-    margin: 0 0 10px 0; /* Space between lines */
-    line-height: 1.6; /* Line height */
-    font-size: 14px; /* Font size */
+    margin: 0 0 10px 0;
+    line-height: 1.6;
+    font-size: 14px;
 }
 
 .profile-button{
@@ -93,35 +138,8 @@ body {
 .help-button{
     border-radius: 40px;
 }
+*/
 
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-form label {
-    font-weight: bold;
-    display: block;
-}
-
-form input, form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 30px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-form input[type="submit"] {
-    background-color: orange;
-    color: white;
-    cursor: pointer;
-}
-
-form input[type="submit"]:hover {
-    background-color: #ff7f00;
-}
 
 
