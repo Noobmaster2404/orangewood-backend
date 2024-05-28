@@ -1,14 +1,27 @@
 document.addEventListener('readystatechange', (event) =>{
     if (document.readyState === 'interactive') {
-        document.getElementById('profile-btn').addEventListener('click', function() {
-            var menu = document.getElementById('profile-menu');
-            if (menu.classList.contains('show')) {
-                menu.classList.remove('show');
+        // document.getElementById('profile-btn').addEventListener('click', function() {
+        //     var menu = document.getElementById('profile-menu');
+        //     if (menu.classList.contains('show')) {
+        //         menu.classList.remove('show');
+        //     } else {
+        //         menu.classList.add('show');
+        //     }
+        // });
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imagePreview = document.getElementById('imagePreview');
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
             } else {
-                menu.classList.add('show');
+                alert('Please select a valid image file.');
             }
         });
-    
         document.getElementById('dynamic-form').addEventListener('submit', function(event) {
             event.preventDefault();
         

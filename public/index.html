@@ -9,66 +9,143 @@
 <body>
     <script src="script.js"></script>
     <div class="header">
-        <img src="images/logo.png" alt="Orangewood">
-        <button class ='profile-button' id="profile-btn"><img src="images/profileIcon.png" alt="profile"></button>
+        <img src="images/logo2.png" alt="Orangewood">
+        <!-- <button class ='profile-button' id="profile-btn"><img src="images/profileIcon.png" alt="profile"></button> -->
     </div>
 
-    <div id="profile-menu" class="profile-menu">
+    <!-- <div id="profile-menu" class="profile-menu">
         <p><strong>Company Name:</strong> <span id="menu-company-name">Orangewood</span></p>
         <p><strong>Client Name:</strong> <span id="menu-client-name">Client Name</span></p>
         <p><strong>Current Phase:</strong> Initiation</p>
         <p><strong>Order Category:</strong> <span id="menu-order-category">Category Name</span></p>
-    </div>
+    </div> -->
 
     <form id="dynamic-form">
-        <h2>Company Intoduction:</h2><br>
-        <label for="client-name">Client Name:</label><br>
-        <input type="text" id="client-name" name="client-name"><br>
+        <div id="section1">
+            <h2>Section 1 - Company Introduction:</h2><br>
+            <label for="client-name">Client Name:</label><br>
+            <input type="text" id="client-name" name="client-name"><br>
 
-        <label for="poc">Person of Contact:</label><br>
-        <input type="text" id="poc" name="poc"><br>
+            <label for="poc">Person of Contact:</label><br>
+            <input type="text" id="poc" name="poc"><br>
 
-        <label for="client-address">Client Address:</label><br>
-        <input type="text" id="client-address" name="client-address"><br>
+            <label for="client-address">Client Address:</label><br>
+            <input type="text" id="client-address" name="client-address"><br>
 
-        <label for="quotation-number">Quotation Number:</label><br>
-        <input type="text" id="quotation-number" name="quotation-number"><br>
+            <label for="quotation-number">Quotation Number:</label><br>
+            <input type="text" id="quotation-number" name="quotation-number"><br>
 
-        <label for="client-ref-id">Client Reference Id:</label><br>
-        <input type="text" id="client-ref-id" name="client-ref-id"><br>
+            <label for="client-ref-id">Client Reference Id:</label><br>
+            <input type="text" id="client-ref-id" name="client-ref-id"><br>
 
-        <label for="project">Project (One line description of the use case):</label><br>
-        <input type="text" id="project" name="project"><br>
+            <label for="project">Project (One line description of the use case):</label><br>
+            <input type="text" id="project" name="project"><br>
 
-        <label for="subject">Subject Example (E.g. Techno-commercial proposal for applicable use cases):</label><br>
-        <input type="text" id="subject" name="subject"><br>
+            <label for="subject">Subject Example (E.g. Techno-commercial proposal for applicable use cases):</label><br>
+            <input type="text" id="subject" name="subject"><br>
 
-        <label for="discussion-date">Date of discussion:</label><br>
-        <input type="text" id="discussion-date" name="discussion-date"><br>
+            <label for="discussion-date">Date of discussion:</label><br>
+            <input type="text" id="discussion-date" name="discussion-date"><br>
+        </div>
 
-        <label for="robot">Robot Type:</label><br>
-        <select id="robot" name="robot">
-            <option value="spray-painting">OWL1</option>
-            <option value="powder-coating">OWL2</option>
-            <option value="bin-picking">OWL3</option>
-            <option value="visual-inspection">OWL4</option>
-        </select><br>
+        <div id="section2">
+            <h2>Section 2 - Robot Specifications and Features (leave irrelevant questions):</h2><br>
+            <label for="robot">Robot Type:</label><br>
+            <select id="robot" name="robot">
+                <option value="owl1">OWL 63</option>
+                <option value="owl2">OWL 66</option>
+                <option value="owl3">OWL 612</option>
+                <option value="owl4">OWL 64</option>
+            </select>
+            <label for="weight">Weight:</label><br>
+            <input type="text" id="weight" name="weight"><br>
 
-        <label for="order-category">Order Category:</label><br>
-        <select id="order-category" name="order-category">
-            <option value="spray-painting">Spray Painting</option>
-            <option value="bin-picking">Bin Picking</option>
-            <option value="visual-inspection">Visual Inspection</option>
-        </select><br>
-        <div id="additional-questions"></div>
-        <input type="submit" value="Submit">
+            <label for="payload">Maximum Payload:</label><br>
+            <input type="text" id="payload" name="payload"><br>
+
+            <label for="reach">Reach:</label><br>
+            <input type="text" id="reach" name="reach"><br>
+
+            <label for="joint-range">Joint Range:</label><br>
+            <input type="text" id="joint-range" name="joint-range"><br>
+
+            <label for="joint-speed">Joint Speed:</label><br>
+            <input type="text" id="joint-speed" name="joint-speed"><br>
+
+            <label for="tcp-speed">TCP Speed:</label><br>
+            <input type="text" id="tcp-speed" name="tcp-speed"><br>
+
+            <label for="rep-pos-accuracy">Repeated Positioning Accuracy:</label><br>
+            <input type="text" id="rep-pos-accuracy" name="rep-pos-accuracy"><br>
+
+            <label for="controller-io">Controller IO:</label><br>
+            <input type="text" id="controller-io" name="controller-io"><br>
+
+            <label for="tool-io">Tool IO:</label><br>
+            <input type="text" id="tool-io" name="tool-io"><br>
+
+            <label for="io-power">IO Power Supply:</label><br>
+            <input type="text" id="io-power" name="io-power"><br>
+
+            <label for="comm-controller">Communication with controller:</label><br>
+            <input type="text" id="comm-controller" name="comm-controller"><br>
+
+            <label for="tool-comm">Tool Communication:</label><br>
+            <input type="text" id="tool-comm" name="tool-comm"><br>
+
+            <label for="protection-class">Protection Class:</label><br>
+            <input type="text" id="protection-class" name="protection-class"><br>
+
+            <label for="power-consumption">Power Consumption:</label><br>
+            <input type="text" id="power-consumption" name="power-consumption"><br>
+
+            <label for="controller-weight">Controller Weight:</label><br>
+            <input type="text" id="controller-weight" name="controller-weight"><br>
+
+            <label for="tool-speed">Tool Speed:</label><br>
+            <input type="text" id="tool-speed" name="tool-speed"><br>
+            
+            <label for="dof">Degree of Freedom:</label><br>
+            <input type="text" id="dof" name="dof"><br>
+            
+            <label for="materials">Materials:</label><br>
+            <input type="text" id="materials" name="materials"><br>
+
+            <label for="temperature">Temperature:</label><br>
+            <input type="text" id="temperature" name="temperature"><br>
+
+            <label for="control-box-size">Control Box Size:</label><br>
+            <input type="text" id="control-box-size" name="control-box-size"><br>
+        </div>
+
+        <div id="section3">
+            <h2>Section 3 - Client Requirement/Concept Overview:</h2><br>
+            <label for="order-category">Order Category:</label><br>
+            <select id="order-category" name="order-category">
+                <option value="spray-painting">Spray Painting/Powder Coating</option>
+                <option value="bin-picking">Bin Picking</option>
+                <option value="visual-inspection">Visual Inspection</option>
+            </select><br>
+            <div class="upload-container">
+                <form id="imageUploadForm">
+                    <label for="imageInput">Upload Image(png) only:</label><br>
+                    <input type="file" id="imageInput" accept="image/*">
+                </form>
+                <div id="preview">
+                    <img id="imagePreview" src="" alt="Image Preview">
+                </div>
+            </div>
+            <label for="extra-details">Any other details about current setup/process/sequence of operations?</label>
+            <input type="text" id="extra-details" name="extra-details"><br>
+
+            <input type="submit" value="Submit">
+        </div>
     </form>
     
-    
 
-    <div class="footer">
+    <!-- <div class="footer">
         <button class="help-button">Help</button>
-    </div>
+    </div> -->
 
 </body>
 </html>
