@@ -49,35 +49,36 @@ document.addEventListener('readystatechange', (event) =>{
         // Search bar implementation
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
+        const partsList = document.getElementById('parts-list');
+
         searchInput.addEventListener('input', function(event) {
             const searchText = event.target.value;
             if (searchText.length > 0) {
                 fetch(`/search-parts?searchTerm=${searchText}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Search results data:', data); // Log the results array
-                    displaySearchResults(data); // Pass 'data' directly to displaySearchResults
-                })
-                .catch(error => {
-                    console.error('Error fetching search results:', error);
-                    // Handle the error here, e.g., display an error message to the user
-                });
-
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        console.log('Full response:', response);
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Search results data:', data); // Adjusted to log data directly
+                        displaySearchResults(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching search results:', error);
+                    });
             } else {
                 searchResults.innerHTML = '';
             }
         });
-        
+
         function displaySearchResults(results) {
             searchResults.innerHTML = ''; // Clear previous results
             if (results.length === 0) {
                 searchResults.textContent = 'No results found.';
-            }else{
+            } else {
                 results.forEach(result => {
                     const resultItem = document.createElement('div');
                     resultItem.textContent = `${result.name} - Cost: ${result.cost}`;
@@ -88,26 +89,35 @@ document.addEventListener('readystatechange', (event) =>{
                     searchResults.appendChild(resultItem);
                 });
             }
-        }       
-
-        // Function to add part
-        function addPart(part) {
-            const partsContainer = document.getElementById('selected-parts');
-            const partItem = document.createElement('div');
-            partItem.textContent = part.name + ' - Cost: ' + part.cost;
-            partItem.classList.add('selected-part');
-            partItem.dataset.partId = part._id;
-            const tickIcon = document.createElement('span');
-            tickIcon.textContent = '✔️';
-            tickIcon.classList.add('tick-icon');
-            tickIcon.addEventListener('click', function() {
-                removePart(part._id);
-            });
-            partItem.appendChild(tickIcon);
-            partsContainer.appendChild(partItem);
         }
 
-        // Function to remove part
+        function addPart(part) {
+            const partItem = document.createElement('li');
+            partItem.classList.add('selected-part');
+            partItem.dataset.partId = part._id;
+
+            const partInfo = document.createElement('span');
+            partInfo.textContent = `${part.name} - Cost: ${part.cost}`;
+
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.min = '1';
+            quantityInput.value = '1';
+            quantityInput.classList.add('quantity-input');
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-button');
+            removeButton.addEventListener('click', function() {
+                removePart(part._id);
+            });
+
+            partItem.appendChild(partInfo);
+            partItem.appendChild(quantityInput);
+            partItem.appendChild(removeButton);
+            partsList.appendChild(partItem);
+        }
+
         function removePart(partId) {
             const partItem = document.querySelector(`.selected-part[data-part-id="${partId}"]`);
             if (partItem) {

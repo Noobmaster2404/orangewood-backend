@@ -54,6 +54,60 @@ form input[type="submit"]:hover {
     max-height: 300px;
 }
 
+#search-results {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.search-result {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.search-result:hover {
+    background-color: #f0f0f0;
+}
+
+#selected-parts {
+    margin-top: 20px;
+}
+
+#parts-list {
+    list-style: none;
+    padding: 0;
+}
+
+.selected-part {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.quantity-input {
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.remove-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background-color: #ff1a1a;
+}
+
+
 
 
 
