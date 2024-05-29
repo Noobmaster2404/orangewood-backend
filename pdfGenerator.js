@@ -2,7 +2,7 @@ const fs = require('fs');
 const PDFDocument = require('pdfkit');
 const { borderMargin, drawBorder, addHeader, addFooter, setupPageTemplate } = require('./public/PageTemplate');
 
-function generateFirstPage(formData){
+function generatePdf(formData){
     return new Promise((resolve, reject) => {
         const drawTable = (doc, tableData, startX, startY, colWidths, rowHeight, cellPadding) => {
             doc.font('Helvetica').fontSize(13);
@@ -34,7 +34,7 @@ function generateFirstPage(formData){
         
 
         // Pipe the PDF document to a writable stream
-        const stream = fs.createWriteStream('public/FirstPage.pdf');
+        const stream = fs.createWriteStream('public/Proposal.pdf');
         doc.pipe(stream);
 
         // Define page dimensions
@@ -89,9 +89,9 @@ function generateFirstPage(formData){
         doc.end();
         stream.on('finish', function () {
             console.log('PDF generated successfully.');
-            resolve('public/FirstPage.pdf');
+            resolve('public/Proposal.pdf');
         });
     });
 }
-module.exports = generateFirstPage;
+module.exports = generatePdf;
 
