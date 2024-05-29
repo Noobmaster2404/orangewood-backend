@@ -55,24 +55,21 @@ form input[type="submit"]:hover {
 }
 
 #search-results {
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
     margin-top: 10px;
+    padding: 0;
 }
 
 .search-result {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
     padding: 10px;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .search-result:hover {
-    background-color: #f0f0f0;
-}
-
-#selected-parts {
-    margin-top: 20px;
+    background-color: #e1e1e1;
 }
 
 #parts-list {
@@ -84,27 +81,38 @@ form input[type="submit"]:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
+    background-color: #e8f5e9;
     border: 1px solid #ccc;
+    padding: 10px;
     margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.part-info {
+    flex-grow: 1;
+    margin-right: 10px;
 }
 
 .quantity-input {
-    width: 60px;
-    margin-left: 10px;
+    width: 50px;
     margin-right: 10px;
 }
 
 .remove-button {
-    background-color: #ff4d4d;
+    background-color: #f44336;
     color: white;
     border: none;
     padding: 5px 10px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 .remove-button:hover {
-    background-color: #ff1a1a;
+    background-color: #d32f2f;
+}
+
+button, input[type="number"] {
+    font-size: 14px;
 }
 
 

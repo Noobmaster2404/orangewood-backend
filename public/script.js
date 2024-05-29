@@ -21,6 +21,7 @@ document.addEventListener('readystatechange', (event) =>{
             inputs.forEach(function(input) {
                 data[input.id] = input.value;
             });
+            data.selectedParts = selectedParts;
             fetch('/submit-form', {
                 method: 'POST',
                 headers: {
