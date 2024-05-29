@@ -14,6 +14,20 @@ document.addEventListener('readystatechange', (event) =>{
                 alert('Please select a valid image file.');
             }
         });
+        document.getElementById('imageInputSolution').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file && file.type=='image/png') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imagePreviewSolution = document.getElementById('imagePreviewSolution');
+                    imagePreviewSolution.src = e.target.result;
+                    imagePreviewSolution.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select a valid image file.');
+            }
+        });
         document.getElementById('dynamic-form').addEventListener('submit', function(event) {
             event.preventDefault();
             var inputs=document.querySelectorAll('#dynamic-form .df, #additional-questions input');

@@ -47,7 +47,7 @@ form input[type="submit"]:hover {
 }
 
 
-#imagePreview {
+#imagePreview, #imagePreviewSolution {
     display: none;
     margin-top: 20px;
     max-width: 100%;

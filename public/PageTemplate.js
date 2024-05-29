@@ -5,13 +5,15 @@ const drawBorder = (doc, pageWidth, pageHeight) => {
     doc.rect(borderMargin, borderMargin, pageWidth - 2*borderMargin, pageHeight - 2*borderMargin).stroke();
 };
 
-const addHeader = (doc, startX, startY) => {
-    doc.font('Helvetica-Bold').fontSize(20).text('Orangewood.', startX, startY);
-};
 //why does this not work on ./images/linkedin.png
 const linkedinImage = 'public/images/linkedin.png';
 const twitterImage = 'public/images/twitter.png';
 const instagramImage = 'public/images/instagram.png';
+const logoImage = 'public/images/logo2.png';
+
+const addHeader = (doc, startX, startY) => {
+    doc.image(logoImage, startX, startY, { width: 150 });
+};
 
 const addFooter = (doc, startX, startY, pageWidth) => {
     // Draw horizontal rule
