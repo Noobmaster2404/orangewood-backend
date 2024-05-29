@@ -1,15 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const generateFirstPage = require('./firstPage.js');
 const path = require('path');
 const fs = require('fs');
-
+const mongoose = require('mongoose');
+const generateFirstPage=require('./firstPage.js');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+mongoose.connect('mongodb://localhost:27017/proposalGenerator')
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((err) => console.error('Error connecting to MongoDB:', err));
 //use this instead of static paths
 // app.use(
 // 	cors({
@@ -53,6 +56,21 @@ app.get('/', function(req, res) {
         });
     });
 });
+
+app.get('/search-parts', async (req, res) => {
+    const searchTerm = req.query.searchTerm || '';
+    try {
+        // Query the 'parts' collection for parts that match the search term
+        const parts = await mongoose.connection.db.collection('parts').find({
+            name: { $regex: searchTerm, $options: 'i' } // Case-insensitive search
+        }).toArray();
+        res.json(parts);
+    } catch (error) {
+        console.error('Error searching for parts:', error);
+        res.status(500).send('Error searching for parts');
+    }
+});
+
  
  const port = process.env.PORT || 3000;
  app.listen(port, () => {

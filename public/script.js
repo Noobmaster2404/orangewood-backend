@@ -46,7 +46,75 @@ document.addEventListener('readystatechange', (event) =>{
             });
         });
         
-            
+        // Search bar implementation
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        searchInput.addEventListener('input', function(event) {
+            const searchText = event.target.value;
+            if (searchText.length > 0) {
+                fetch(`/search-parts?searchTerm=${searchText}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Search results data:', data); // Log the results array
+                    displaySearchResults(data); // Pass 'data' directly to displaySearchResults
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                    // Handle the error here, e.g., display an error message to the user
+                });
+
+            } else {
+                searchResults.innerHTML = '';
+            }
+        });
+        
+        function displaySearchResults(results) {
+            searchResults.innerHTML = ''; // Clear previous results
+            if (results.length === 0) {
+                searchResults.textContent = 'No results found.';
+            }else{
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.textContent = `${result.name} - Cost: ${result.cost}`;
+                    resultItem.classList.add('search-result');
+                    resultItem.addEventListener('click', function() {
+                        addPart(result);
+                    });
+                    searchResults.appendChild(resultItem);
+                });
+            }
+        }       
+
+        // Function to add part
+        function addPart(part) {
+            const partsContainer = document.getElementById('selected-parts');
+            const partItem = document.createElement('div');
+            partItem.textContent = part.name + ' - Cost: ' + part.cost;
+            partItem.classList.add('selected-part');
+            partItem.dataset.partId = part._id;
+            const tickIcon = document.createElement('span');
+            tickIcon.textContent = '✔️';
+            tickIcon.classList.add('tick-icon');
+            tickIcon.addEventListener('click', function() {
+                removePart(part._id);
+            });
+            partItem.appendChild(tickIcon);
+            partsContainer.appendChild(partItem);
+        }
+
+        // Function to remove part
+        function removePart(partId) {
+            const partItem = document.querySelector(`.selected-part[data-part-id="${partId}"]`);
+            if (partItem) {
+                partItem.remove();
+            }
+        }
+
     
         //adding placeholder
         window.onload = function() {
