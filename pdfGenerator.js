@@ -51,13 +51,13 @@ function generatePdf(formData){
         const dateStr = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
         const tableData = [
             ['DATE', dateStr],
-            ['CLIENT REF. ID', formData.clientRefId],
-            ['QUOTATION NO.', formData.quotationNumber],
-            ['CLIENT NAME', formData.clientName],
-            ['ADDRESS', formData.clientAddress],
-            ['PROJECT', formData.project],
-            ['SUBJECT', formData.subject],
-            ['KIND ATTENTION', formData.poc]
+            ['CLIENT REF. ID', formData.section1.clientRefId],
+            ['QUOTATION NO.', formData.section1.quotationNumber],
+            ['CLIENT NAME', formData.section1.clientName],
+            ['ADDRESS', formData.section1.clientAddress],
+            ['PROJECT', formData.section1.project],
+            ['SUBJECT', formData.section1.subject],
+            ['KIND ATTENTION', formData.section1.poc]
         ];
 
         //table settings
@@ -77,7 +77,7 @@ function generatePdf(formData){
         // Add additional text below the table
         doc.moveDown(5);
         doc.fontSize(11);
-        doc.text(`Ref- As per our discussion dated ${formData.discussionDate}.`,startX);
+        doc.text(`Ref- As per our discussion dated ${formData.section1.discussionDate}.`,startX);
         doc.moveDown(2).text('Thank you for considering Orangewood Labs as your automation partner. We look forward to the opportunity to contribute to your organization\'s success. We are pleased to submit our offer for the subjected project.',startX);
         doc.moveDown(2).text('This offer encapsulates the following:',startX);
         doc.list(['Company Introduction', 'Robot Specifications & Features', 'Concept Overview', 'Bill of Material (Our scope of Supply & Works)', 'Commercial Offer', 'Commercial Terms & Conditions'], { bulletRadius: 2, indent: 20 });
@@ -103,7 +103,7 @@ function generatePdf(formData){
         doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('2.  ROBOT Specifications and Features',startX+15,startY+30);
         doc.moveDown(1);
         doc.fontSize(10).fillColor('black').text('Technical Specifications:',startX+45);
-        
+
 
 
         doc.end();

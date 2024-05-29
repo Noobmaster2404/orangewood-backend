@@ -30,12 +30,46 @@ document.addEventListener('readystatechange', (event) =>{
         });
         document.getElementById('dynamic-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            var inputs=document.querySelectorAll('#dynamic-form .df, #additional-questions input');
-            var data = {};
-            inputs.forEach(function(input) {
-                data[input.id] = input.value;
+            //data collection
+            const section1 = {};
+            const section2 = {};
+            const section3 = {};
+            const section4 = {};
+            const additionalQuestions = {};
+            const section1Inputs = document.querySelectorAll('.section1 .df');
+            section1Inputs.forEach(function(input) {
+                section1[input.id] = input.value;
             });
-            data.selectedParts = selectedParts;
+            const section2Inputs = document.querySelectorAll('.section2 .df');
+            section2Inputs.forEach(function(input) {
+                section2[input.id] = input.value;
+            });
+            const section3Inputs = document.querySelectorAll('.section3 .df');
+            section3Inputs.forEach(function(input) {
+                section3[input.id] = input.value;
+            });
+            const section4Inputs = document.querySelectorAll('.section4 .df');
+            section4Inputs.forEach(function(input) {
+                section4[input.id] = input.value;
+            });
+            section4.selectedParts = selectedParts;
+            const additionalQuestionsInputs = document.querySelectorAll('#additional-questions input');
+            additionalQuestionsInputs.forEach(function(input) {
+                additionalQuestions[input.id] = input.value;
+            });
+            console.log(section1);
+            console.log(section2);
+            console.log(section3);
+            console.log(section4);
+            console.log(additionalQuestions);
+            const data = {
+                section1,
+                section2,
+                section3,
+                section4,
+                additionalQuestions
+            };
+
             fetch('/submit-form', {
                 method: 'POST',
                 headers: {
