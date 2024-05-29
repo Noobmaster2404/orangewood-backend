@@ -34,7 +34,7 @@ document.addEventListener('readystatechange', (event) =>{
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'FirstPage.pdf' || 'download';
+                a.download = 'Proposal.pdf' || 'download';
                 const clickHandler = () => {
                     setTimeout(() => {
                         URL.revokeObjectURL(url);
@@ -51,7 +51,7 @@ document.addEventListener('readystatechange', (event) =>{
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
         const partsList = document.getElementById('parts-list');
-
+        let selectedParts = [];
         searchInput.addEventListener('input', function(event) {
             const searchText = event.target.value;
             if (searchText.length > 0) {

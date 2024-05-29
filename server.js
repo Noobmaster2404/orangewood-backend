@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
-const generateFirstPage=require('./firstPage.js');
+const generatePdf=require('./pdfGenerator.js');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,9 +45,9 @@ app.get('/', function(req, res) {
  
  app.post('/submit-form', (req, res) => {
     const formData = req.body;
-    generateFirstPage(formData).then(pdfPath => {
+    generatePdf(formData).then(pdfPath => {
         res.setHeader('Content-Type', 'application/pdf');
-        res.download(pdfPath, 'FirstPage.pdf', function(err){
+        res.download(pdfPath, 'Proposal.pdf', function(err){
             if (err) {
                 console.log(err);
             } else {
