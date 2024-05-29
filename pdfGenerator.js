@@ -4,6 +4,7 @@ const { borderMargin, drawBorder, addHeader, addFooter, setupPageTemplate } = re
 
 function generatePdf(formData){
     return new Promise((resolve, reject) => {
+        //Creds page
         const drawTable = (doc, tableData, startX, startY, colWidths, rowHeight, cellPadding) => {
             doc.font('Helvetica').fontSize(13);
             for (let i = 0; i < tableData.length; i++) {
@@ -85,6 +86,25 @@ function generatePdf(formData){
         doc.text('For Orangewood Research & Advancement Pvt Limited');
         doc.text('Maneesh Garg');
         doc.font('Helvetica');
+
+
+        //Company Introduction
+        doc.addPage();
+        setupPageTemplate(doc, pageWidth, pageHeight, margin);
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('1.  COMPANY INTRODUCTION',startX+15,startY+30);
+        doc.moveDown(1);
+        doc.fontSize(10).fillColor('black').text('About Us',startX+45);
+        doc.moveDown(1);
+        doc.font('Helvetica').text('Orangewood Labs is an innovative startup specializing in the design, development, and manufacturing of advanced 6-axis industrial robots. Our team consists of experienced engineers and industry professionals committed to providing customized automation solutions for diverse industries.',startX+45);
+
+        //Robot Specs
+        doc.addPage();
+        setupPageTemplate(doc, pageWidth, pageHeight, margin);
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('2.  ROBOT Specifications and Features',startX+15,startY+30);
+        doc.moveDown(1);
+        doc.fontSize(10).fillColor('black').text('Technical Specifications:',startX+45);
+        
+
 
         doc.end();
         stream.on('finish', function () {

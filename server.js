@@ -60,7 +60,6 @@ app.get('/', function(req, res) {
 app.get('/search-parts', async (req, res) => {
     const searchTerm = req.query.searchTerm || '';
     try {
-        // Query the 'parts' collection for parts that match the search term
         const parts = await mongoose.connection.db.collection('parts').find({
             name: { $regex: searchTerm, $options: 'i' } // Case-insensitive search
         }).toArray();
