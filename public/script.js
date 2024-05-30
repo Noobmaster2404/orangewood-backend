@@ -28,7 +28,7 @@ document.addEventListener('readystatechange', (event) =>{
                 alert('Please select a valid image file.');
             }
         });
-        document.getElementById('dynamic-form').addEventListener('submit', function(event) {
+        document.getElementById('dynamicForm').addEventListener('submit', function(event) {
             event.preventDefault();
             //data collection
             const section1 = {};
@@ -53,7 +53,7 @@ document.addEventListener('readystatechange', (event) =>{
                 section4[input.id] = input.value;
             });
             section4.selectedParts = selectedParts;
-            const additionalQuestionsInputs = document.querySelectorAll('#additional-questions input');
+            const additionalQuestionsInputs = document.querySelectorAll('#additionalQuestions input');
             additionalQuestionsInputs.forEach(function(input) {
                 additionalQuestions[input.id] = input.value;
             });
@@ -69,7 +69,6 @@ document.addEventListener('readystatechange', (event) =>{
                 section4,
                 additionalQuestions
             };
-
             fetch('/submit-form', {
                 method: 'POST',
                 headers: {
@@ -185,7 +184,7 @@ document.addEventListener('readystatechange', (event) =>{
     
         function updateAdditionalQuestions() {
             var orderCategory = document.getElementById('order-category').value;
-            var additionalQuestionsDiv = document.getElementById('additional-questions');
+            var additionalQuestionsDiv = document.getElementById('additionalQuestions');
             additionalQuestionsDiv.innerHTML = ''; // Clear previous questions
 
             if (orderCategory === 'spray-painting') {
