@@ -17,6 +17,14 @@ function generatePdf(formData) {
                     maxRowHeight = Math.max(maxRowHeight, textHeight + cellPadding * 2);
                 }
 
+                // Check if adding this row will exceed the page height
+                if (startY + maxRowHeight > doc.page.height - 2*doc.page.margins.bottom) {
+                    doc.addPage();
+                    setupPageTemplate(doc, doc.page.width, doc.page.height, doc.page.margins.top);
+                    doc.fontSize(13);
+                    startY = 1.5*doc.page.margins.top;
+                }
+
                 // Draw the cells for the current row
                 for (let j = 0; j < tableData[i].length; j++) {
                     doc.rect(startX + colWidths.slice(0, j).reduce((a, b) => a + b, 0), startY, colWidths[j], maxRowHeight).stroke();
@@ -86,7 +94,7 @@ function generatePdf(formData) {
         drawTable(doc, tableData, startX, startY, colWidths, cellPadding);
 
         // Add additional text below the table
-        doc.moveDown(2);
+        doc.moveDown(5);
         doc.fontSize(11);
         doc.text(`Ref- As per our discussion dated ${formData.section1.discussionDate}.`, startX);
         doc.moveDown(2).text('Thank you for considering Orangewood Labs as your automation partner. We look forward to the opportunity to contribute to your organization\'s success. We are pleased to submit our offer for the subjected project.', startX);
@@ -103,7 +111,7 @@ function generatePdf(formData) {
         setupPageTemplate(doc, pageWidth, pageHeight, margin);
         doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('1.  COMPANY INTRODUCTION', startX + 15, startY + 30);
         doc.moveDown(1);
-        doc.fontSize(10).fillColor('black').text('About Us', startX + 45);
+        doc.fontSize(12).fillColor('black').text('About Us', startX + 45);
         doc.moveDown(1);
         doc.font('Helvetica').text('Orangewood Labs is an innovative startup specializing in the design, development, and manufacturing of advanced 6-axis industrial robots. Our team consists of experienced engineers and industry professionals committed to providing customized automation solutions for diverse industries.', startX + 45);
 
@@ -112,8 +120,9 @@ function generatePdf(formData) {
         setupPageTemplate(doc, pageWidth, pageHeight, margin);
         doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('2.  ROBOT Specifications and Features', startX + 15, startY + 30);
         doc.moveDown(1);
-        doc.fontSize(10).fillColor('black').text('Technical Specifications:', startX + 45);
+        doc.fontSize(12).fillColor('black').text('Technical Specifications:', startX + 45);
         doc.moveDown(1);
+
         // Create a table for technical specifications
         const techSpecsTableData = [];
 
@@ -133,7 +142,6 @@ function generatePdf(formData) {
             const techSpecsStartY = doc.y;
             drawTable(doc, techSpecsTableData, startX, techSpecsStartY, techSpecsColWidths, cellPadding);
         }
-
 
         doc.end();
         stream.on('finish', function () {
