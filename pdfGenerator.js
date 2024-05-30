@@ -166,7 +166,23 @@ function generatePdf(formData) {
         const clientRequirementsColWidths = [250, 250];
         const clientRequirementsY = doc.y;
         drawTable(doc, clientRequirements, startX, clientRequirementsY, clientRequirementsColWidths, cellPadding);
+        //adding image
+        const addImageToPDF = (imageDataUrl, description) => {
+            if (imageDataUrl) {
+                const imageBuffer = Buffer.from(imageDataUrl.split(',')[1], 'base64');
+                const imageWidth = 250;
+                const imageHeight = 250;
 
+                if (doc.y + imageHeight > doc.page.height - 2*margin) {
+                    doc.addPage();
+                    setupPageTemplate(doc, pageWidth, pageHeight, margin);
+                }
+                doc.moveDown(2).text(description, { align: 'center' });
+                doc.image(imageBuffer, (doc.page.width - imageWidth) / 2, doc.y, { width: imageWidth, height: imageHeight });
+            }
+        };
+        addImageToPDF(formData.imageDataUrl);
+        
         doc.end();
         stream.on('finish', function () {
             console.log('PDF generated successfully.');

@@ -1,27 +1,33 @@
 document.addEventListener('readystatechange', (event) =>{
     if (document.readyState === 'interactive') {
+        let imageDataUrl = '';
+        let imageDataUrlSolution = '';
+
         document.getElementById('imageInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
-            if (file && file.type=='image/png') {
+            if (file && file.type == 'image/png') {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const imagePreview = document.getElementById('imagePreview');
                     imagePreview.src = e.target.result;
                     imagePreview.style.display = 'block';
+                    imageDataUrl = e.target.result;  // Store the base64 string
                 };
                 reader.readAsDataURL(file);
             } else {
                 alert('Please select a valid image file.');
             }
         });
+
         document.getElementById('imageInputSolution').addEventListener('change', function(event) {
             const file = event.target.files[0];
-            if (file && file.type=='image/png') {
+            if (file && file.type == 'image/png') {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const imagePreviewSolution = document.getElementById('imagePreviewSolution');
                     imagePreviewSolution.src = e.target.result;
                     imagePreviewSolution.style.display = 'block';
+                    imageDataUrlSolution = e.target.result;  // Store the base64 string
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -65,7 +71,9 @@ document.addEventListener('readystatechange', (event) =>{
                 section2,
                 section3,
                 section4,
-                additionalQuestions
+                additionalQuestions,
+                imageDataUrl,
+                imageDataUrlSolution
             };
             fetch('/submit-form', {
                 method: 'POST',
