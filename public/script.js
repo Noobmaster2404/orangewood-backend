@@ -47,7 +47,8 @@ document.addEventListener('readystatechange', (event) =>{
             });
             const section3Inputs = document.querySelectorAll('.section3 .df');
             section3Inputs.forEach(function(input) {
-                section3[input.id] = input.value;
+                const lbl=document.querySelector("label[for=" + input.id + "]");
+                section3[input.id] = [input.value,lbl.textContent];
             });
             const section4Inputs = document.querySelectorAll('.section4 .df');
             section4Inputs.forEach(function(input) {

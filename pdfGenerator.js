@@ -118,7 +118,7 @@ function generatePdf(formData) {
         // Robot Specs
         doc.addPage();
         setupPageTemplate(doc, pageWidth, pageHeight, margin);
-        doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('2.  ROBOT Specifications and Features', startX + 15, startY + 30);
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('2.  ROBOT SPECIFICATIONS AND FEATURES', startX + 15, startY + 30);
         doc.moveDown(1);
         doc.fontSize(12).fillColor('black').text('Technical Specifications:', startX + 45);
         doc.moveDown(1);
@@ -138,10 +138,34 @@ function generatePdf(formData) {
 
         // Draw the technical specifications table if there are entries
         if (techSpecsTableData.length > 0) {
-            const techSpecsColWidths = [250, 250]; // Adjust column widths as needed
+            const techSpecsColWidths = [250, 250];
             const techSpecsStartY = doc.y;
             drawTable(doc, techSpecsTableData, startX, techSpecsStartY, techSpecsColWidths, cellPadding);
         }
+
+        //Concept Overview
+        doc.addPage();
+        setupPageTemplate(doc, pageWidth, pageHeight, margin);
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('3.  CLIENT REQUIREMENT AND CONCEPT OVERVIEW', startX + 15, startY + 30);
+        doc.moveDown(1).fontSize(12).fillColor('black');
+
+        const clientRequirements = [];
+
+        for (const key in formData.section3) {
+            if (formData.section3.hasOwnProperty(key)) {
+                const value = formData.section3[key];
+                clientRequirements.push([value[1], value[0]]);
+            }
+        }
+        for (const key in formData.additionalQuestions) {
+            if (formData.additionalQuestions.hasOwnProperty(key)) {
+                const value = formData.additionalQuestions[key];
+                clientRequirements.push([value[1], value[0]]);
+            }
+        }
+        const clientRequirementsColWidths = [250, 250];
+        const clientRequirementsY = doc.y;
+        drawTable(doc, clientRequirements, startX, clientRequirementsY, clientRequirementsColWidths, cellPadding);
 
         doc.end();
         stream.on('finish', function () {
