@@ -86,7 +86,7 @@ function generatePdf(formData) {
         drawTable(doc, tableData, startX, startY, colWidths, cellPadding);
 
         // Add additional text below the table
-        doc.moveDown(5);
+        doc.moveDown(2);
         doc.fontSize(11);
         doc.text(`Ref- As per our discussion dated ${formData.section1.discussionDate}.`, startX);
         doc.moveDown(2).text('Thank you for considering Orangewood Labs as your automation partner. We look forward to the opportunity to contribute to your organization\'s success. We are pleased to submit our offer for the subjected project.', startX);
@@ -113,7 +113,7 @@ function generatePdf(formData) {
         doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('2.  ROBOT Specifications and Features', startX + 15, startY + 30);
         doc.moveDown(1);
         doc.fontSize(10).fillColor('black').text('Technical Specifications:', startX + 45);
-
+        doc.moveDown(1);
         // Create a table for technical specifications
         const techSpecsTableData = [];
 
