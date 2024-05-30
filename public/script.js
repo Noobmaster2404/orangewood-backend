@@ -63,9 +63,9 @@ document.addEventListener('readystatechange', (event) =>{
             section4.selectedParts = selectedParts;
             const additionalQuestionsInputs = document.querySelectorAll('#additionalQuestions input');
             additionalQuestionsInputs.forEach(function(input) {
-                additionalQuestions[input.id] = input.value;
+                const lbl=document.querySelector("label[for=" + input.id + "]");
+                additionalQuestions[input.id] = [input.value,lbl.textContent];
             });
-            console.log(section2);
             const data = {
                 section1,
                 section2,
