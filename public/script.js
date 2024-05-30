@@ -42,7 +42,8 @@ document.addEventListener('readystatechange', (event) =>{
             });
             const section2Inputs = document.querySelectorAll('.section2 .df');
             section2Inputs.forEach(function(input) {
-                section2[input.id] = input.value;
+                const lbl=document.querySelector("label[for=" + input.id + "]");
+                section2[input.id] = [input.value,lbl.textContent];
             });
             const section3Inputs = document.querySelectorAll('.section3 .df');
             section3Inputs.forEach(function(input) {
@@ -57,11 +58,7 @@ document.addEventListener('readystatechange', (event) =>{
             additionalQuestionsInputs.forEach(function(input) {
                 additionalQuestions[input.id] = input.value;
             });
-            console.log(section1);
             console.log(section2);
-            console.log(section3);
-            console.log(section4);
-            console.log(additionalQuestions);
             const data = {
                 section1,
                 section2,

@@ -41,7 +41,7 @@ const addFooter = (doc, startX, startY, pageWidth) => {
 
 const setupPageTemplate = (doc, pageWidth, pageHeight, margin) => {
     drawBorder(doc, pageWidth, pageHeight);
-    addHeader(doc, margin, margin);
+    addHeader(doc, margin, 0.5*margin);
     addFooter(doc, margin, pageHeight - 2*margin , pageWidth - margin * 2);
 };
 
