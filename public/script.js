@@ -1,8 +1,59 @@
 document.addEventListener('readystatechange', (event) =>{
     if (document.readyState === 'interactive') {
+        function collectAdditionalCosts() {
+            const additionalCosts = [];
+            const additionalCostItems = document.querySelectorAll('.additional-cost-item');
+            additionalCostItems.forEach(item => {
+                const costDescription = item.querySelector('input[name="additionalCostDescription[]"]').value;
+                const costAmount = item.querySelector('input[name="additionalCostAmount[]"]').value;
+                additionalCosts.push({ description: costDescription, amount: costAmount });
+            });
+            return additionalCosts;
+        }
+
+        const addItems=document.getElementById('add-items');
+        const addItemsContainer=document.getElementById('additional-costs-container');
+        addItems.addEventListener('click',()=>{
+            // Create a new div to hold the additional cost item
+            const additionalCostItem = document.createElement('div');
+            additionalCostItem.classList.add('additional-cost-item');
+    
+            // Create an input for the cost description
+            const costDescriptionInput = document.createElement('input');
+            costDescriptionInput.type = 'text';
+            costDescriptionInput.name = 'additionalCostDescription[]';
+            costDescriptionInput.placeholder = 'Cost Description';
+            costDescriptionInput.classList.add('df');
+            costDescriptionInput.style.marginBottom=0;
+            
+            // Create an input for the cost amount
+            const costAmountInput = document.createElement('input');
+            costAmountInput.type = 'text';
+            costAmountInput.name = 'additionalCostAmount[]';
+            costAmountInput.placeholder = 'Cost Amount';
+            costAmountInput.classList.add('df');
+            costAmountInput.style.marginBottom=0;
+    
+            // Create a button to remove the additional cost item
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.innerText = 'Remove';
+            // removeButton.id='removeButton';
+            removeButton.addEventListener('click', () => {
+                addItemsContainer.removeChild(additionalCostItem);
+            });
+    
+            // Append the inputs and the remove button to the additional cost item div
+            additionalCostItem.appendChild(costDescriptionInput);
+            additionalCostItem.appendChild(costAmountInput);
+            additionalCostItem.appendChild(removeButton);
+    
+            // Append the additional cost item div to the container
+            addItemsContainer.appendChild(additionalCostItem);
+        });
+
         let imageDataUrl = '';
         let imageDataUrlSolution = '';
-
         document.getElementById('imageInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file && file.type == 'image/png') {
@@ -42,6 +93,7 @@ document.addEventListener('readystatechange', (event) =>{
             const section3 = {};
             const section4 = {};
             const additionalQuestions = {};
+            const additionalCosts = collectAdditionalCosts();
             const section1Inputs = document.querySelectorAll('.section1 .df');
             section1Inputs.forEach(function(input) {
                 section1[input.id] = input.value;
@@ -72,9 +124,11 @@ document.addEventListener('readystatechange', (event) =>{
                 section3,
                 section4,
                 additionalQuestions,
+                additionalCosts,
                 imageDataUrl,
                 imageDataUrlSolution
             };
+            console.log(data);
             fetch('/submit-form', {
                 method: 'POST',
                 headers: {

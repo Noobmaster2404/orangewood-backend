@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+    background-color: rgb(241, 216, 216);
 }
 
 .header {
@@ -8,8 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 0px;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
 }
 
 .header img {
@@ -20,7 +19,16 @@ form {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
+    max-width: 800px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    margin: 20px auto;
+}
+
+h2{
+    background-color: rgb(187, 187, 187);
+    border-radius: 5px;
+    padding: 15px;
 }
 
 form label {
@@ -71,6 +79,9 @@ form input[type="submit"]:hover {
 .search-result:hover {
     background-color: #e1e1e1;
 }
+#search-input{
+    margin-bottom: 0px;
+}
 
 #parts-list {
     list-style: none;
@@ -115,6 +126,68 @@ button, input[type="number"] {
     font-size: 14px;
 }
 
+
+#extra-costs {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#additional-costs-container .additional-cost-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#additional-costs-container .additional-cost-item input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#additional-costs-container .additional-cost-item button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#additional-costs-container .additional-cost-item button:hover {
+    background-color: #d32f2f;
+}
+
+/* button#removeButton{
+    background-color:black;
+} */
+
+button#add-items{
+    padding: 10px 20px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button#add-items:hover {
+    background-color:  #ff7f00;
+}
+::-webkit-file-upload-button{
+    padding: 10px 20px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+::-webkit-file-upload-button:hover{
+    background-color:  #ff7f00;
+}
 
 
 

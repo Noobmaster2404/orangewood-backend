@@ -126,18 +126,22 @@
                     <img id="imagePreview" src="" alt="Image Preview">
                 </div>
             </div>
-            <label for="extra-details">Any other details about current setup/sequence of operations?</label>
+            <label for="extra-details">Any other details about current setup/sequence of operations?</label><br>
             <input type="text" id="extra-details" name="extra-details" class="df"><br>
-
-            </div>
+        </div>
             <div class="section4">
                 <h2>Section 4 - Proposed Solution:</h2><br>
                 <label for="search-input" placeholder="Search for parts">Search items to add in BOM</label><br>
-                <input type="text" id="search-input" class="df" name="search-input" >
+                <input type="text" id="search-input" class="df" name="search-input">
                 <div id="search-results"></div>
                 <div id="selected-parts">
                     <h3>Selected Parts:</h3>
                     <ul id="parts-list"></ul>
+                </div>
+                <div id="extra-costs">
+                    <p><strong>Add any additional costs:<strong></p>
+                    <button type="button" id="add-items">Add Items</button>
+                    <div id="additional-costs-container"></div>
                 </div>
                 <div class="upload-container">
                     <label for="imageInputSolution">Upload Solution Image(png only):</label><br>
