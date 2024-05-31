@@ -128,7 +128,6 @@ document.addEventListener('readystatechange', (event) =>{
                 imageDataUrl,
                 imageDataUrlSolution
             };
-            console.log(data);
             fetch('/submit-form', {
                 method: 'POST',
                 headers: {
@@ -183,7 +182,7 @@ document.addEventListener('readystatechange', (event) =>{
         });
 
         function displaySearchResults(results) {
-            searchResults.innerHTML = ''; // Clear previous results
+            searchResults.innerHTML = ''; 
             if (results.length === 0) {
                 searchResults.textContent = 'No results found.';
             } else {
@@ -279,7 +278,7 @@ document.addEventListener('readystatechange', (event) =>{
                     <label for="baking-time">Baking Time</label><br>
                     <input type="text" id="baking-time" name="baking-time"><br>
 
-                    <label for="powder-change-frequency">No. of times powder is changed in a day</label><br>
+                    <label for="powder-change-frequency">No. of times powder is changed in one day</label><br>
                     <input type="text" id="powder-change-frequency" name="powder-change-frequency"><br>
 
                     <label for="article-weight-dimensions">Weight and Dimensions of Article</label><br>

@@ -178,11 +178,20 @@ function generatePdf(formData) {
                     doc.addPage();
                     setupPageTemplate(doc, pageWidth, pageHeight, margin);
                 }
-                doc.moveDown(2).text(description, { align: 'center' });
+                doc.moveDown(2);
+                // doc.text(description, { align: 'center' });
                 doc.image(imageBuffer, 25, doc.y, { height: imageHeight });
             }
         };
         addImageToPDF(formData.imageDataUrl);
+
+        //Proposed Solution
+        doc.addPage();
+        setupPageTemplate(doc, pageWidth, pageHeight, margin);
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('4.  PROPOSED SOLUTION', startX + 15, startY + 30);
+        doc.moveDown(1).fontSize(12).fillColor('black');
+        addImageToPDF(formData.imageDataUrlSolution);
+
         doc.end();
         stream.on('finish', function () {
             console.log('PDF generated successfully.');
