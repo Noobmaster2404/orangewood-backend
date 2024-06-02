@@ -1,4 +1,4 @@
-# Dynamic Form Handling and PDF Generation
+# Dynamic Form Handling and Proposal Generation
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -12,21 +12,21 @@
     3. [JavaScript Functionality](#javascript-functionality)
 7. [Backend Details](#backend-details)
     1. [Server Setup](#server-setup)
-    2. [PDF Generation](#pdf-generation)
+    2. [Proposal Generation](#proposal-generation)
 8. [Contributing](#contributing)
 9. [License](#license)
 
 ## Introduction
 
-This project is a web application that features a dynamic form for collecting user inputs, displaying image previews, handling form submissions, and generating a PDF document based on the collected data. The frontend is built using HTML, CSS, and JavaScript, while the backend uses Node.js and PDFKit for PDF generation.
+This project is a web application that features a dynamic form for collecting user inputs, displaying image previews, handling form submissions, and generating a PDF document based on the collected data. The frontend is built using HTML, CSS, and JavaScript, while the backend uses Node.js and PDFKit for Proposal generation.
 
 ## Features
 
 - Dynamic form sections with real-time addition and removal of items
 - Image preview functionality
-- Live search for parts
+- Live search for parts (partial autocomplete)
 - Form submission and PDF generation
-- Server-side PDF creation using PDFKit
+- Server-side Proposal creation using PDFKit
 
 ## Project Structure
 
@@ -48,20 +48,25 @@ project-root/
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/dynamic-form-pdf-generation.git
+    git clone https://github.com/Noobmaster2404/orangewood-backend
     ```
 2. Navigate to the project directory:
     ```bash
-    cd dynamic-form-pdf-generation
+    cd backend
     ```
 3. Install the dependencies:
     ```bash
-    npm install
+    npm install pdfkit mongoose express
     ```
 4. Start the server:
     ```bash
     node server.js
     ```
+5. You can also setup Nodemon for automatic server restart:
+    ```bash
+    npm i nodemon --save-dev
+    ```
+6. Connect to mongoDb and add parts in the database.
 
 ## Usage
 
@@ -95,7 +100,7 @@ The JavaScript file (`script.js`) includes:
 
 The backend server (`server.js`) is set up using Node.js and handles form submissions, processes data, and generates PDF files.
 
-### PDF Generation
+### Proposal Generation
 
 PDF files are generated using PDFKit based on the data received from the form submission. The PDF generation logic ensures that the collected data is appropriately formatted and presented in the resulting document.
 
