@@ -37,12 +37,12 @@ project-root/
 ├── README.md
 ├── PDFGenerator.js
 └── public/
-    ├── images/
+    ├── images/ 
     ├── index.html
     ├── PageTemplate.js
     ├── script.js
     └── styles.css
-
+```
 
 ## Installation
 
