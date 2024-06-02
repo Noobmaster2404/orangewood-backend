@@ -30,17 +30,18 @@ This project is a web application that features a dynamic form for collecting us
 
 ## Project Structure
 
-/project-root
-    /public
-        /css
-            - styles.css
-        /js
-            - script.js
-            - PageTemplate.js
-    /views
-        - index.html
-    - server.js
-    - package.json
+```markdown
+project-root/
+│
+├── server.js
+├── README.md
+├── PDFGenerator.js
+└── public/
+    ├── images/
+    ├── index.html
+    ├── PageTemplate.js
+    ├── script.js
+    └── styles.css
 
 
 ## Installation
