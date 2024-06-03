@@ -94,6 +94,7 @@ document.addEventListener('readystatechange', (event) =>{
             const section4 = {};
             const additionalQuestions = {};
             const selectedParts = {};
+            const tnc={};
             const additionalCosts = collectAdditionalCosts();
             const section1Inputs = document.querySelectorAll('.section1 .df');
             section1Inputs.forEach(function(input) {
@@ -125,6 +126,12 @@ document.addEventListener('readystatechange', (event) =>{
                 const cost=input.querySelector('.part-cost');
                 selectedParts[text.textContent]=[cost.textContent,qty.value];
             });
+            const tncInput = document.querySelectorAll('.section5 .df');
+            tncInput.forEach(function(input) {
+                const lbl=document.querySelector("label[for=" + input.id + "]");
+                tnc[input.id] = [input.value,lbl.textContent];
+            });
+
             const data = {
                 section1,
                 section2,
@@ -134,7 +141,8 @@ document.addEventListener('readystatechange', (event) =>{
                 additionalQuestions,
                 additionalCosts,
                 imageDataUrl,
-                imageDataUrlSolution
+                imageDataUrlSolution,
+                tnc
             };
             fetch('/submit-form', {
                 method: 'POST',
