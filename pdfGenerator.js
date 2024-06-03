@@ -130,7 +130,7 @@ function generatePdf(formData) {
         drawTable(doc, tableData, startX, startY, colWidths, cellPadding);
 
         // Add additional text below the table
-        doc.moveDown(5);
+        doc.moveDown(2);
         doc.fontSize(11);
         doc.text(`Ref- As per our discussion dated ${formData.section1.discussionDate}.`, startX);
         doc.moveDown(2).text('Thank you for considering Orangewood Labs as your automation partner. We look forward to the opportunity to contribute to your organization\'s success. We are pleased to submit our offer for the subjected project.', startX);
@@ -249,7 +249,7 @@ function generatePdf(formData) {
         }, 0);
 
         // Draw BOM table
-        const bomTableColWidths = [250, 50, 100, 100];
+        const bomTableColWidths = [200, 100, 100, 100];
         const bomTableStartY = doc.y;
         drawTable(doc, bomTableData, startX, bomTableStartY, bomTableColWidths, cellPadding);
 
