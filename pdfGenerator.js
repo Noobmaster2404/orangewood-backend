@@ -192,6 +192,45 @@ function generatePdf(formData) {
         doc.moveDown(1).fontSize(12).fillColor('black');
         addImageToPDF(formData.imageDataUrlSolution);
 
+            // BOM
+            doc.addPage();
+            setupPageTemplate(doc, pageWidth, pageHeight, margin);
+            doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('5.  BILL OF MATERIALS', startX + 15, startY + 30);
+            doc.moveDown(1).fontSize(12).fillColor('black');
+            const bomTableHeaders = ['Description', 'Quantity', 'Unit Price', 'Total Price'];
+            const bomTableData = [bomTableHeaders];
+            // Iterate over BOM items to populate table data
+            Object.keys(formData.selectedParts).forEach((key) => {
+                const unitPrice = formData.selectedParts[key][0];
+                const qty=formData.selectedParts[key][1];
+                const totalPrice = qty * unitPrice;
+                bomTableData.push([key, qty, unitPrice, totalPrice]);
+            });
+            for(var i=0;i<formData.additionalCosts.length;i++){
+                var item=formData.additionalCosts[i];
+                bomTableData.push([item.description,'','',item.amount]);
+            }
+
+            const totalBOMPrice = bomTableData.slice(1).reduce((total, row) => {
+                const totalPrice = parseFloat(row[3]) || 0;
+                return total + totalPrice;
+            }, 0);
+
+            // Draw BOM table
+            const bomTableColWidths = [250, 50, 100, 100];
+            const bomTableStartY = doc.y;
+            drawTable(doc, bomTableData, startX, bomTableStartY, bomTableColWidths, cellPadding);
+
+            // Add total BOM price below the table
+            doc.moveDown(2).text(`Grand Total: $${totalBOMPrice.toFixed(2)}`);
+
+
+            // TnC
+            doc.addPage();
+            setupPageTemplate(doc, pageWidth, pageHeight, margin);
+            doc.font('Helvetica-Bold').fontSize(15).fillColor('#3E029F').text('5.  TERMS AND CONDITIONS', startX + 15, startY + 30);
+            doc.moveDown(1).fontSize(12).fillColor('black');
+
         doc.end();
         stream.on('finish', function () {
             console.log('PDF generated successfully.');

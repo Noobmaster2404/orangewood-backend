@@ -93,6 +93,7 @@ document.addEventListener('readystatechange', (event) =>{
             const section3 = {};
             const section4 = {};
             const additionalQuestions = {};
+            const selectedParts = {};
             const additionalCosts = collectAdditionalCosts();
             const section1Inputs = document.querySelectorAll('.section1 .df');
             section1Inputs.forEach(function(input) {
@@ -112,17 +113,24 @@ document.addEventListener('readystatechange', (event) =>{
             section4Inputs.forEach(function(input) {
                 section4[input.id] = input.value;
             });
-            section4.selectedParts = selectedParts;
             const additionalQuestionsInputs = document.querySelectorAll('#additionalQuestions input');
             additionalQuestionsInputs.forEach(function(input) {
                 const lbl=document.querySelector("label[for=" + input.id + "]");
                 additionalQuestions[input.id] = [input.value,lbl.textContent];
+            });
+            const selectedPartInputs = document.querySelectorAll('.section4 #selected-parts li');
+            selectedPartInputs.forEach(function(input) {
+                const text=input.querySelector('.part-name');
+                const qty=input.querySelector('.quantity-input');
+                const cost=input.querySelector('.part-cost');
+                selectedParts[text.textContent]=[cost.textContent,qty.value];
             });
             const data = {
                 section1,
                 section2,
                 section3,
                 section4,
+                selectedParts,
                 additionalQuestions,
                 additionalCosts,
                 imageDataUrl,
@@ -157,7 +165,6 @@ document.addEventListener('readystatechange', (event) =>{
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
         const partsList = document.getElementById('parts-list');
-        let selectedParts = [];
         searchInput.addEventListener('input', function(event) {
             const searchText = event.target.value;
             if (searchText.length > 0) {
@@ -204,7 +211,12 @@ document.addEventListener('readystatechange', (event) =>{
             partItem.dataset.partId = part._id;
 
             const partInfo = document.createElement('span');
-            partInfo.textContent = `${part.name} - Cost: ${part.cost}`;
+            partInfo.textContent = part.name;
+            partInfo.classList.add('part-name');
+
+            const partCost = document.createElement('span');
+            partCost.textContent = part.cost;
+            partCost.classList.add('part-cost');
 
             const quantityInput = document.createElement('input');
             quantityInput.type = 'number';
@@ -220,6 +232,7 @@ document.addEventListener('readystatechange', (event) =>{
             });
 
             partItem.appendChild(partInfo);
+            partItem.appendChild(partCost);
             partItem.appendChild(quantityInput);
             partItem.appendChild(removeButton);
             partsList.appendChild(partItem);
