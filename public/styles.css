@@ -189,6 +189,10 @@ button#add-items:hover {
     background-color:  #ff7f00;
 }
 
+ #dynamicForm .document-options input{
+    margin: 0 0 0 0;
+    width: 10%;
+}
 
 
 

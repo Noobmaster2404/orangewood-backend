@@ -54,37 +54,61 @@ document.addEventListener('readystatechange', (event) =>{
 
         let imageDataUrl = '';
         let imageDataUrlSolution = '';
+        // document.getElementById('imageInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file && file.type == 'image/png') {
+        //         const reader = new FileReader();
+        //         reader.onload = function(e) {
+        //             const imagePreview = document.getElementById('imagePreview');
+        //             imagePreview.src = e.target.result;
+        //             imagePreview.style.display = 'block';
+        //             imageDataUrl = e.target.result;  // Store the base64 string
+        //         };
+        //         reader.readAsDataURL(file);
+        //     } else {
+        //         alert('Please select a valid image file.');
+        //     }
+        // });
+
+        // document.getElementById('imageInputSolution').addEventListener('change', function(event) {
+        //     const file = event.target.files[0];
+        //     if (file && file.type == 'image/png') {
+        //         const reader = new FileReader();
+        //         reader.onload = function(e) {
+        //             const imagePreviewSolution = document.getElementById('imagePreviewSolution');
+        //             imagePreviewSolution.src = e.target.result;
+        //             imagePreviewSolution.style.display = 'block';
+        //             imageDataUrlSolution = e.target.result;  // Store the base64 string
+        //         };
+        //         reader.readAsDataURL(file);
+        //     } else {
+        //         alert('Please select a valid image file.');
+        //     }
+        // });
         document.getElementById('imageInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
-            if (file && file.type == 'image/png') {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imagePreview = document.getElementById('imagePreview');
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                    imageDataUrl = e.target.result;  // Store the base64 string
-                };
-                reader.readAsDataURL(file);
-            } else {
-                alert('Please select a valid image file.');
-            }
+            handleImageUpload(file, 'imagePreview', 'imageDataUrl');
         });
-
+    
         document.getElementById('imageInputSolution').addEventListener('change', function(event) {
             const file = event.target.files[0];
+            handleImageUpload(file, 'imagePreviewSolution', 'imageDataUrlSolution');
+        });
+    
+        function handleImageUpload(file, previewId, dataUrlVar) {
             if (file && file.type == 'image/png') {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const imagePreviewSolution = document.getElementById('imagePreviewSolution');
-                    imagePreviewSolution.src = e.target.result;
-                    imagePreviewSolution.style.display = 'block';
-                    imageDataUrlSolution = e.target.result;  // Store the base64 string
+                    const imagePreview = document.getElementById(previewId);
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    window[dataUrlVar] = e.target.result;  // Store the base64 string
                 };
                 reader.readAsDataURL(file);
             } else {
                 alert('Please select a valid image file.');
             }
-        });
+        }
         document.getElementById('dynamicForm').addEventListener('submit', function(event) {
             event.preventDefault();
             //data collection
@@ -142,7 +166,7 @@ document.addEventListener('readystatechange', (event) =>{
                 additionalCosts,
                 imageDataUrl,
                 imageDataUrlSolution,
-                tnc
+                tnc,
             };
             fetch('/submit-form', {
                 method: 'POST',

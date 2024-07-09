@@ -64,7 +64,7 @@ app.get('/search-parts', async (req, res) => {
     const searchTerm = req.query.searchTerm || '';
     try {
         const parts = await mongoose.connection.db.collection('parts').find({
-            name: { $regex: searchTerm, $options: 'i' } // Case-insensitive search
+            name: { $regex: searchTerm, $options: 'i' }
         }).toArray();
         res.json(parts);
     } catch (error) {
