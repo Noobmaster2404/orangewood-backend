@@ -47,39 +47,38 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
  });
  
- app.post('/submit-form', async (req, res) => {
+app.post('/submit-form', async (req, res) => {
     const formData = req.body;
     const format = req.body.format || 'pdf'; // 'pdf' or 'docx'
-
-    try {
-        if (format === 'pdf') {
-            const pdfPath = await generatePdf(formData);
-            res.setHeader('Content-Type', 'application/pdf');
-            res.download(pdfPath, 'Proposal.pdf', (err) => {
-                if (err) {
-                    console.error('Error sending PDF:', err);
-                } else {
-                    fs.unlinkSync(pdfPath);
-                }
-            });
-        } else if (format === 'docx') {
-            const docPath = await generateWord(formData);
+    if (format === 'pdf') {
+        const pdfPath = await generatePdf(formData);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.download(pdfPath, 'Proposal.pdf', (err) => {
+            if (err) {
+                console.error('Error sending PDF:', err);
+                res.status(500).json({ error: 'Internal server error' });
+            } else {
+                fs.unlinkSync(pdfPath);
+            }
+        });
+    } else if (format === 'docx') {
+        const docPath = await generateWord(formData);
+            console.log(docPath);
+            console.log("out");
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
             res.download(docPath, 'Proposal.docx', (err) => {
                 if (err) {
                     console.error('Error sending DOCX:', err);
+                    res.status(500).json({ error: 'Internal server error' });
                 } else {
                     fs.unlinkSync(docPath);
                 }
             });
-        } else {
-            res.status(400).json({ error: 'Invalid format' });
-        }
-    } catch (error) {
-        console.error('Error processing form submission:', error);
-        res.status(500).json({ error: 'Internal server error' });
+    } else {
+        res.status(400).json({ error: 'Invalid format' });
     }
 });
+
 
 
 app.get('/search-parts', async (req, res) => {
@@ -100,3 +99,25 @@ app.get('/search-parts', async (req, res) => {
  app.listen(port, () => {
      console.log(`Server listening on port ${port}`);
  });
+// const express = require('express');
+// const app = express();
+// const fs = require('fs');
+// const generateHelloWorldDocx = require('./helloWorld');
+
+// app.get('/download-hello-world', async (req, res) => {
+//     try {
+//         const buffer = generateHelloWorldDocx();
+//         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+//         res.setHeader('Content-Disposition', 'attachment; filename=HelloWorld.docx');
+//         res.send(buffer);
+//     } catch (error) {
+//         console.error('Error generating Hello World DOCX:', error);
+//         res.status(500).send('Error generating Hello World DOCX');
+//     }
+// });
+
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => {
+//     console.log(`Server listening on port ${port}`);
+// });
+
