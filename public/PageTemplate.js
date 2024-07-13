@@ -29,7 +29,7 @@ const addFooter = (doc, startX, startY, pageWidth) => {
    doc.text('hellorobot@orangewood.co', startX+190, startY+35)
         .link(startX+190, startY+35, 120, 10, 'mailto:hellorobot@orangewood.co');
     doc.fillColor('black');
-
+    
     //image location should match link location as link location shows clickable area
     doc.image(linkedinImage, startX+360, startY+30, { width: 20 })
         .link(startX+360, startY+30, 20, 20, 'https://www.linkedin.com/company/orangewood-labs/mycompany/');

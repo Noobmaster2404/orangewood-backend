@@ -155,7 +155,7 @@ document.addEventListener('readystatechange', (event) =>{
                 const lbl=document.querySelector("label[for=" + input.id + "]");
                 tnc[input.id] = [input.value,lbl.textContent];
             });
-
+            const format = document.getElementById('format').value;
             const data = {
                 section1,
                 section2,
@@ -167,8 +167,9 @@ document.addEventListener('readystatechange', (event) =>{
                 imageDataUrl,
                 imageDataUrlSolution,
                 tnc,
+                'format':format
             };
-            fetch('/submit-form', {
+            fetch('http://localhost:3000/submit-form', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -180,7 +181,8 @@ document.addEventListener('readystatechange', (event) =>{
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'Proposal.pdf' || 'download';
+                a.download = format === 'pdf' ? 'Proposal.pdf' : 'Proposal.docx';
+                document.body.appendChild(a);
                 const clickHandler = () => {
                     setTimeout(() => {
                         URL.revokeObjectURL(url);
@@ -190,8 +192,10 @@ document.addEventListener('readystatechange', (event) =>{
                 a.addEventListener('click', clickHandler, false);
                 a.click();
                 return a;
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
-        });
         
         // Search bar implementation
         const searchInput = document.getElementById('search-input');

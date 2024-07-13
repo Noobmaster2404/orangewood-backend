@@ -158,10 +158,14 @@
             <label for="paymentTerms">Payment Terms:</label><br>
             <input type="text" id="paymentTerms" name="paymentTerms" class="df"><br>
         </div>
-
         <div class="document-options">
             <h2>Select Proposal Format:</h2>
-            <div class="format-options">
+            <label for="format">Select format:</label>
+            <select name="format" id="format">
+                <option value="pdf">PDF</option>
+                <option value="docx">Word</option>
+            </select>
+            <!-- <div class="format-options">
                 <label>
                 <input type="radio" id="pdf" name="documentFormat" checked>
                 PDF
@@ -170,12 +174,9 @@
                 <input type="radio" id="word" name="documentFormat">
                 Word
                 </label><br>
-            </div>
+            </div>-->
         </div>
-            
-            
         <input type="submit" value="Submit">
     </form>
-    
 </body>
 </html>

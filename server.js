@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const generatePdf=require('./pdfGenerator.js');
+const generateWord = require('./wordGenerator');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,19 +47,40 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
  });
  
- app.post('/submit-form', (req, res) => {
+ app.post('/submit-form', async (req, res) => {
     const formData = req.body;
-    generatePdf(formData).then(pdfPath => {
-        res.setHeader('Content-Type', 'application/pdf');
-        res.download(pdfPath, 'Proposal.pdf', function(err){
-            if (err) {
-                console.log(err);
-            } else {
-                fs.unlinkSync(pdfPath); // delete the file after sending it to the client
-            }
-        });
-    });
+    const format = req.body.format || 'pdf'; // 'pdf' or 'docx'
+
+    try {
+        if (format === 'pdf') {
+            const pdfPath = await generatePdf(formData);
+            res.setHeader('Content-Type', 'application/pdf');
+            res.download(pdfPath, 'Proposal.pdf', (err) => {
+                if (err) {
+                    console.error('Error sending PDF:', err);
+                } else {
+                    fs.unlinkSync(pdfPath);
+                }
+            });
+        } else if (format === 'docx') {
+            const docPath = await generateWord(formData);
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+            res.download(docPath, 'Proposal.docx', (err) => {
+                if (err) {
+                    console.error('Error sending DOCX:', err);
+                } else {
+                    fs.unlinkSync(docPath);
+                }
+            });
+        } else {
+            res.status(400).json({ error: 'Invalid format' });
+        }
+    } catch (error) {
+        console.error('Error processing form submission:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
+
 
 app.get('/search-parts', async (req, res) => {
     const searchTerm = req.query.searchTerm || '';
