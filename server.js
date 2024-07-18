@@ -63,8 +63,6 @@ app.post('/submit-form', async (req, res) => {
         });
     } else if (format === 'docx') {
         const docPath = await generateWord(formData);
-            console.log(docPath);
-            console.log("out");
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
             res.download(docPath, 'Proposal.docx', (err) => {
                 if (err) {

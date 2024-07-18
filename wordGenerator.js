@@ -1,148 +1,81 @@
 const fs = require('fs');
-const { Document, Footer, Header, Packer, PageNumber, NumberFormat, PageOrientation, Paragraph, TextRun } = require('docx');
+const { Document, Packer, Paragraph, TextRun, BorderStyle } = require('docx');
+const { addHeader, addFooter } = require('./public/wordPageTemplate');
 
 function generateWord(formData) {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
         const doc = new Document({
             sections: [
                 {
-                    children: [new Paragraph("Hello World")],
-                },
-                {
                     properties: {
                         page: {
-                            pageNumbers: {
-                                start: 1,
-                                formatType: NumberFormat.DECIMAL,
+                            margin: {
+                                top: 600 * 72 / 96,    // 600px converted to points? Looks sketchy
+                                right: 600 * 72 / 96,  
+                                bottom: 600 * 72 / 96, 
+                                left: 600 * 72 / 96,   
+                            },
+                            borders: {
+                                pageBorderBottom: {
+                                    style: BorderStyle.SINGLE,
+                                    size: 1 * 8,
+                                    color: '000000',
+                                },
+                                pageBorderLeft: {
+                                    style: BorderStyle.SINGLE,
+                                    size: 1 * 8,
+                                    color: '000000',
+                                },
+                                pageBorderRight: {
+                                    style: BorderStyle.SINGLE,
+                                    size: 1 * 8,
+                                    color: '000000',
+                                },
+                                pageBorderTop: {
+                                    style: BorderStyle.SINGLE,
+                                    size: 1 * 8, 
+                                    color: '000000',
+                                },
                             },
                         },
                     },
                     headers: {
-                        default: new Header({
-                            children: [new Paragraph("First Default Header on another page")],
-                        }),
+                        default: addHeader(),
                     },
                     footers: {
-                        default: new Footer({
-                            children: [new Paragraph("Footer on another page")],
-                        }),
-                    },
-        
-                    children: [new Paragraph("hello")],
-                },
-                {
-                    properties: {
-                        page: {
-                            size: {
-                                orientation: PageOrientation.LANDSCAPE,
-                            },
-                            pageNumbers: {
-                                start: 1,
-                                formatType: NumberFormat.DECIMAL,
-                            },
-                        },
-                    },
-                    headers: {
-                        default: new Header({
-                            children: [new Paragraph("Second Default Header on another page")],
-                        }),
-                    },
-                    footers: {
-                        default: new Footer({
-                            children: [new Paragraph("Footer on another page")],
-                        }),
-                    },
-                    children: [new Paragraph("hello in landscape")],
-                },
-                {
-                    properties: {
-                        page: {
-                            size: {
-                                orientation: PageOrientation.PORTRAIT,
-                            },
-                        },
-                    },
-                    headers: {
-                        default: new Header({
-                            children: [
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            children: ["Page number: ", PageNumber.CURRENT],
-                                        }),
-                                    ],
-                                }),
-                            ],
-                        }),
-                    },
-        
-                    children: [new Paragraph("Page number in the header must be 2, because it continues from the previous section.")],
-                },
-                {
-                    properties: {
-                        page: {
-                            size: {
-                                orientation: PageOrientation.PORTRAIT,
-                            },
-                            pageNumbers: {
-                                formatType: NumberFormat.UPPER_ROMAN,
-                            },
-                        },
-                    },
-                    headers: {
-                        default: new Header({
-                            children: [
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            children: ["Page number: ", PageNumber.CURRENT],
-                                        }),
-                                    ],
-                                }),
-                            ],
-                        }),
+                        default: addFooter(),
                     },
                     children: [
-                        new Paragraph(
-                            "Page number in the header must be III, because it continues from the previous section, but is defined as upper roman.",
-                        ),
-                    ],
-                },
-                {
-                    properties: {
-                        page: {
-                            size: {
-                                orientation: PageOrientation.PORTRAIT,
-                            },
-                            pageNumbers: {
-                                start: 25,
-                                formatType: NumberFormat.DECIMAL,
-                            },
-                        },
-                    },
-                    headers: {
-                        default: new Header({
+                        new Paragraph({
                             children: [
-                                new Paragraph({
-                                    children: [
-                                        new TextRun({
-                                            children: ["Page number: ", PageNumber.CURRENT],
-                                        }),
-                                    ],
+                                new TextRun("Ref- As per our discussion dated "),
+                                new TextRun({
+                                    text: formData.section1.discussionDate,
+                                    bold: true
                                 }),
-                            ],
+                                new TextRun(".")
+                            ]
                         }),
-                    },
-                    children: [
-                        new Paragraph(
-                            "Page number in the header must be 25, because it is defined to start at 25 and to be decimal in this section.",
-                        ),
+                        new Paragraph("Thank you for considering Orangewood Labs as your automation partner. We look forward to the opportunity to contribute to your organization's success. We are pleased to submit our offer for the subjected project."),
+                        new Paragraph("This offer encapsulates the following:"),
+                        new Paragraph({
+                            children: [
+                                new TextRun({
+                                    text: "Company Introduction: ",
+                                    bold: true
+                                }),
+                                new TextRun("Orangewood Labs is an innovative startup specializing in the design, development, and manufacturing of advanced 6-axis industrial robots. Our team consists of experienced engineers and industry professionals committed to providing customized automation solutions for diverse industries.")
+                            ]
+                        }),
+                        //Other sections
                     ],
                 },
             ],
         });
 
-        const filePath='public/Proposal.docx';
+        const filePath = 'public/Proposal.docx';
+
+        // Saving the doc temporarily and then erasing it from the directory
         Packer.toBuffer(doc).then(buffer => {
             fs.writeFileSync(filePath, buffer);
             console.log('Word document generated successfully.');
@@ -151,8 +84,7 @@ function generateWord(formData) {
             console.error('Error generating Word document:', err);
             reject(err);
         });
-    })
-    
+    });
 }
-module.exports = generateWord;
 
+module.exports = generateWord;
